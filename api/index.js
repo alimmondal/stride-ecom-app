@@ -23,14 +23,16 @@ async function run() {
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
 
-    const userDB = client.db('userDB');
-    const userCollection = userDB.collection('userCollection');
+    const productDB = client.db('productDB');
+    const shoeCollection = productDB.collection('shoeCollection');
 
-    // create a document to be inserted
-    const doc = { name: "Red", town: "kanto" };
-    const result = await userCollection.insertOne(doc);
-
-
+    // create product post route
+    app.post("/shoe", async(req, res) => {
+      const data =req.body;
+      const result = await shoeCollection.insertOne(data);
+      res.send(result);
+     })
+    
     console.log("db connection established");
   } finally {
     await client.close();
