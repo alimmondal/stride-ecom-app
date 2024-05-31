@@ -54,7 +54,7 @@ const AllProducts = () => {
             </Table.HeadCell>
           </Table.Head>
           {products.map((shoe) => (
-            <Table.Body key={shoe._id} className="divided-y overflow-x-auto">
+            <Table.Body key={shoe._id} className="divided-y ">
               <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                 {/* <Table.Cell> */}
                 {/* {new Date(post.updatedAt).toLocaleDateString()} */}
