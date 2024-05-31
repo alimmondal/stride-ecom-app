@@ -7,16 +7,16 @@ const AddProducts = () => {
     e.preventDefault();
 
     const form = e.target;
-    const id = form.id.value;
+    // const id = form.id.value;
     const title = form.title.value;
     const brand = form.brand.value;
     const price = form.price.value;
     const description = form.description.value;
     const image_url = form.image_url.value;
 
-    const data = { id, title, brand, price, description, image_url };
+    const data = { title, brand, price, description, image_url };
 
-    const res = await fetch("http://localhost:3000/shoes", {
+    const res = await fetch("http://localhost:5000/shoes", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -32,12 +32,6 @@ const AddProducts = () => {
         form.reset();
       });
   };
-
-  // useEffect(() => {
-  //   if (isError) {
-  //     toast.error(error);
-  //   }
-  // }, [isError, error]);
 
   return (
     <div className="max-w-lg mx-auto w-full p-3">
@@ -86,14 +80,7 @@ const AddProducts = () => {
               placeholder="Image URL"
             />
           </div>
-          <div className="mt-2">
-            <TextInput
-              // className="bg-gray-100 p-4 w-full border border-black rounded-lg"
-              type="text"
-              name="id"
-              placeholder="ID"
-            />
-          </div>
+
           <div className="mt-2 flex justify-center items-center">
             <Button
               // className="btn mt-4 w-full bg-red-500 text-white p-4"

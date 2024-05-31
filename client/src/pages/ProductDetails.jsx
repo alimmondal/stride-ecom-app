@@ -3,8 +3,9 @@ import { useLoaderData } from "react-router-dom";
 
 const ProductDetails = () => {
   const shoe = useLoaderData();
+  console.log(shoe);
 
-  const { brand, description, image_url, price, title } = shoe;
+  const { _id, brand, description, image_url, price, title } = shoe;
 
   return (
     <div className="w-4/5 flex items-center justify-evenly gap-8 px-8 sm:px-16 md:px-48 md:py-28">

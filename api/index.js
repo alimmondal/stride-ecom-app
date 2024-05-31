@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const cors = require('cors');
 const port = 5000
 
@@ -21,28 +21,43 @@ async function run() {
   try {
     await client.connect();
     // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
+    // await client.db("admin").command({ ping: 1 });
 
     const productDB = client.db('productDB');
     const shoeCollection = productDB.collection('shoeCollection');
+    console.log("db connection established");
 
     // create product post route
-    app.post("/shoe", async(req, res) => {
-      const data =req.body;
-      const result = await shoeCollection.insertOne(data);
+    app.post("/shoes", async (req, res) => {
+      const shoeData = req.body;
+      const result = await shoeCollection.insertOne(shoeData);
       res.send(result);
-     })
+    })
+
+    // get all products
+    app.get("/shoes", async (req, res) => {
+      const shoeData = shoeCollection.find({});
+      const result = await shoeData.toArray()
+      res.send(result);
+    })
+
+    // get single product
+    app.get("/shoes/:id", async (req, res) => {
+      const id = req.params.id;
+      const result = shoeCollection.findOne({_id: new ObjectId(id)});
+      res.send(result);
+    })
     
-    console.log("db connection established");
-  } finally {
-    await client.close();
+  } catch (err) { 
+    console.log(err)
   }
+
 }
 run().catch(console.dir);
 
-// app.get('/', (req, res) => { 
-//   res.send("Route is working");
-// });
+app.get('/', (req, res) => { 
+  res.send("Route is working");
+});
 
 app.listen(port, (req, res) => { 
   console.log("App is listening on port:", port);

@@ -9,8 +9,9 @@ const AllProducts = () => {
   const [showModal, setShowModal] = useState(false);
   const [postIdToDelete, setPostIdToDelete] = useState("");
 
+  // console.log(products);
   useEffect(() => {
-    fetch("http://localhost:3000/shoes/")
+    fetch("http://localhost:5000/shoes/")
       .then((res) => res.json())
       .then((data) => setProducts(data));
   }, []);
@@ -18,12 +19,12 @@ const AllProducts = () => {
   const handleDelete = async (id) => {
     setShowModal(false);
     try {
-      const result = await fetch(`http://localhost:3000/shoes/${id}`, {
+      const result = await fetch(`http://localhost:5000/shoes/${_id}`, {
         method: "DELETE",
       })
         .then((res) => res.json())
         .then((data) => {
-          // console.log(data);
+          console.log(data);
           setProducts(products.filter((product) => product.id !== id));
           if (data) {
             toast.success("Product deleted successfully");
@@ -53,14 +54,14 @@ const AllProducts = () => {
             </Table.HeadCell>
           </Table.Head>
           {products.map((shoe) => (
-            <Table.Body key={shoe.id} className="divided-y">
+            <Table.Body key={shoe._id} className="divided-y">
               <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                 <Table.Cell>
                   {/* {new Date(post.updatedAt).toLocaleDateString()} */}
                   {new Date().toLocaleDateString()}
                 </Table.Cell>
                 <Table.Cell>
-                  <Link to={`/products/${shoe?.id}`}>
+                  <Link to={`/products/${shoe?._id}`}>
                     <img src={shoe?.image_url} alt="Shoes" className="w-48" />
                   </Link>
                 </Table.Cell>
@@ -68,7 +69,7 @@ const AllProducts = () => {
                 <Table.Cell className="">
                   <Link
                     className="font-medium text-gray-900 dark:text-white"
-                    to={`/products/${shoe?.id}`}
+                    to={`/products/${shoe?._id}`}
                   >
                     {shoe?.title}
                   </Link>
@@ -80,7 +81,7 @@ const AllProducts = () => {
 
                 <Table.Cell>
                   <Link
-                    to={`/products/${shoe?.id}`}
+                    to={`/products/${shoe?._id}`}
                     className="font-medium hover:underline cursor-pointer"
                   >
                     See Details
@@ -90,16 +91,16 @@ const AllProducts = () => {
                   <span
                     // onClick={() => {
                     // setShowModal(true);
-                    // setPostIdToDelete(shoe?.id);
+                    // setPostIdToDelete(shoe?._id);
                     // }}
-                    onClick={() => handleDelete(shoe?.id)}
+                    onClick={() => handleDelete(shoe?._id)}
                     className="font-medium text-red-500 hover:underline cursor-pointer"
                   >
                     Delete
                   </span>
                 </Table.Cell>
                 <Table.Cell>
-                  <Link to={`edit/${shoe?.id}`}>
+                  <Link to={`edit/${shoe?._id}`}>
                     <span className="text-emerald-500 hover:underline">
                       Edit
                     </span>
@@ -159,7 +160,7 @@ export default AllProducts;
       <div className="my-16 flex flex-wrap gap-4">
         {products.map((shoe) => (
           <SingleProductCardDashboard
-            key={shoe.id}
+            key={shoe._id}
             shoe={shoe}
             onDelete={handleDeleteProduct}
           />
