@@ -35,7 +35,7 @@ const EditProducts = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         if (data) {
           toast.success("Product updated successfully");
         }

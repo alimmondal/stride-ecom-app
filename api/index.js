@@ -44,7 +44,27 @@ async function run() {
     // get single product
     app.get("/shoes/:id", async (req, res) => {
       const id = req.params.id;
-      const result = shoeCollection.findOne({_id: new ObjectId(id)});
+      const result = await shoeCollection.findOne({_id: new ObjectId(id)});
+      res.send(result);
+    })
+    // update single product
+    app.patch("/shoes/:id", async (req, res) => {
+      const id = req.params.id;
+      const updateData = req.body;
+      const result = await shoeCollection.updateOne(
+        { _id: new ObjectId(id) },
+        { $set: updateData }
+      );
+      res.send(result);
+    })
+    // delete single product
+    app.delete("/shoes/:id", async (req, res) => {
+      const id = req.params.id;
+  
+      const result = await shoeCollection.deleteOne(
+        { _id: new ObjectId(id) },
+
+      );
       res.send(result);
     })
     

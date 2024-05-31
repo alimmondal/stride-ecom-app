@@ -11,12 +11,12 @@ const AllProducts = () => {
 
   // console.log(products);
   useEffect(() => {
-    fetch("http://localhost:5000/shoes/")
+    fetch("http://localhost:5000/shoes")
       .then((res) => res.json())
       .then((data) => setProducts(data));
   }, []);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (_id) => {
     setShowModal(false);
     try {
       const result = await fetch(`http://localhost:5000/shoes/${_id}`, {
@@ -24,8 +24,8 @@ const AllProducts = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
-          setProducts(products.filter((product) => product.id !== id));
+          // console.log(data);
+          setProducts(products.filter((product) => product._id !== _id));
           if (data) {
             toast.success("Product deleted successfully");
           }
@@ -56,10 +56,10 @@ const AllProducts = () => {
           {products.map((shoe) => (
             <Table.Body key={shoe._id} className="divided-y">
               <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                <Table.Cell>
-                  {/* {new Date(post.updatedAt).toLocaleDateString()} */}
-                  {new Date().toLocaleDateString()}
-                </Table.Cell>
+                {/* <Table.Cell> */}
+                {/* {new Date(post.updatedAt).toLocaleDateString()} */}
+                {/* {new Date().toLocaleDateString()} */}
+                {/* </Table.Cell> */}
                 <Table.Cell>
                   <Link to={`/products/${shoe?._id}`}>
                     <img src={shoe?.image_url} alt="Shoes" className="w-48" />
