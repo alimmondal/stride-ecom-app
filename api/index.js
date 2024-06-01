@@ -22,10 +22,13 @@ async function run() {
     await client.connect();
     // Send a ping to confirm a successful connection
     // await client.db("admin").command({ ping: 1 });
+    console.log("db connection established");
 
     const productDB = client.db('productDB');
     const shoeCollection = productDB.collection('shoeCollection');
-    console.log("db connection established");
+
+    const userDB = client.db('userDB');
+    const userCollection = userDB.collection('userCollection');
 
     // create product post route
     app.post("/shoes", async (req, res) => {
@@ -33,14 +36,12 @@ async function run() {
       const result = await shoeCollection.insertOne(shoeData);
       res.send(result);
     })
-
     // get all products
     app.get("/shoes", async (req, res) => {
       const shoeData = shoeCollection.find({});
       const result = await shoeData.toArray()
       res.send(result);
     })
-
     // get single product
     app.get("/shoes/:id", async (req, res) => {
       const id = req.params.id;
@@ -56,15 +57,24 @@ async function run() {
         { $set: updateData }
       );
       res.send(result);
-    })
+    }) 
     // delete single product
     app.delete("/shoes/:id", async (req, res) => {
       const id = req.params.id;
-  
       const result = await shoeCollection.deleteOne(
         { _id: new ObjectId(id) },
-
       );
+      res.send(result);
+    })
+
+    // create user
+    app.post("/user", async (req, res) => {
+      const userData = req.body;
+      const isUserExist = await userCollection.findOne({ email: userData?.email });
+      if (isUserExist) { 
+        return res.send("Login successful")
+      }
+      const result = await userCollection.insertOne(userData);
       res.send(result);
     })
     
@@ -83,4 +93,5 @@ app.listen(port, (req, res) => {
   console.log("App is listening on port:", port);
 });
 
+// mongodb Account email: italimbdb@gmail.com
 // italimbd

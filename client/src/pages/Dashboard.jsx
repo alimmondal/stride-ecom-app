@@ -4,7 +4,7 @@ import { Button } from "flowbite-react";
 
 const Dashboard = () => {
   const { logout, user } = useAuth();
-  console.log(user);
+  // console.log(user);
   return (
     <div className="max-w-lg mx-auto p-3 w-full">
       <div className="flex flex-col items-center justify-center gap-4">
