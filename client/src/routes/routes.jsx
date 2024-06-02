@@ -13,6 +13,7 @@ import AllProducts from "../pages/AllProducts";
 import AddProducts from "../pages/AddProducts";
 import EditProducts from "../pages/EditProducts";
 import Profile from "../pages/Profile";
+import EditProfile from "../pages/EditProfile";
 
 export const router = createBrowserRouter([
   {
@@ -86,6 +87,12 @@ export const router = createBrowserRouter([
       {
         path: "profile",
         element: <Profile />,
+      },
+      {
+        path: "profile/edit/:id",
+        element: <EditProfile />,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/user/get/${params.id}`),
       },
       {
         path: "all-products/edit/:id",
